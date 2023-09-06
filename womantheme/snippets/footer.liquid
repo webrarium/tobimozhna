@@ -1,0 +1,34 @@
+<footer>
+    <div class="container">
+        <div class="f-line"></div>
+        <div class="footer-wrp">
+            <img src="{{ 'footer-img.svg' | asset_url }}" alt="" class="footer-img">
+            <div class="footer-menu">
+                <nav role="navigation">
+                <ul class="f-links-list">
+                    {%- for link in linklists.footer.links -%}
+                    <li>
+                        <div class="f-menu-head">{{ link.title }}</div>
+
+                        {%- if link.links != blank -%}
+                        <ul class="f-links-list-nested">
+                            {%- for child_link in link.links -%}
+                            <li>
+                                <a href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %} class="f-link-nested">
+                                {{ child_link.title }}
+                                </a>
+
+                            </li>
+                            {%- endfor -%}
+                        </ul>
+                        {%- endif -%}
+
+                    </li>
+                    {%- endfor -%}
+                </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</footer>

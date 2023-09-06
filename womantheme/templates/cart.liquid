@@ -1,0 +1,76 @@
+<section class="cart-section">
+    <div class="container">
+        {% if cart.item_count > 0 %}
+            <h1>{{ 'cart.general.title' | t }}</h1>
+
+            <form action="/cart" method="post" novalidate>
+
+                {% for item in cart.items %}
+
+                    <div class="cart-line-item">
+
+                        {% if item.image != blank %}
+                            <a href="{{ item.url | within: collections.all }}">
+                            {{ item | img_url: '200x200' | img_tag: item.title }}
+                            </a>
+                        {% endif %}
+                    <div class="cart-item-info">
+                        <div class="cart-product-title-wrp">
+
+                        <a href="{{ item.url | within: collections.all }}" class="cart-product-title">{{ item.product.title }}</a>
+
+                        {% unless item.product.has_only_default_variant %}
+                            <p class="variant-title">{{ item.variant.title }}</p>
+                        {% endunless %}
+
+                        </div>
+                        
+                        <div class="quantity">
+                            <div onclick="down({{ forloop.index }})" >-</div>
+                            <input id="q{{ forloop.index }}"type="number" name="updates[]" min="1" value="{{ item.quantity }}">
+                            <div onclick="up({{ forloop.index }})" >+</div>
+                        </div>
+
+                        {{ item.line_price | money }}
+
+                        <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 7.04886V7.73172C17 7.91953 16.8334 8.07316 16.6297 8.07316H7.37034C7.16663 8.07316 7 7.91952 7 7.73172V7.04886C7 6.86105 7.16664 6.70743 7.37034 6.70743H16.6297C16.8334 6.70731 17 6.86106 17 7.04886ZM7.92587 8.75617H16.0741V18.6586C16.0741 18.8464 15.9074 19 15.7037 19H8.29627C8.09256 19 7.92593 18.8464 7.92593 18.6586L7.92587 8.75617ZM13.8518 16.2683C13.8518 16.4561 14.0185 16.6098 14.2222 16.6098C14.4259 16.6098 14.5925 16.4561 14.5925 16.2683V11.4879C14.5925 11.3001 14.4259 11.1464 14.2222 11.1464C14.0185 11.1464 13.8518 11.3001 13.8518 11.4879V16.2683ZM11.6296 16.2683C11.6296 16.4561 11.7963 16.6098 12 16.6098C12.2037 16.6098 12.3703 16.4561 12.3703 16.2683V11.4879C12.3703 11.3001 12.2037 11.1464 12 11.1464C11.7963 11.1464 11.6296 11.3001 11.6296 11.4879V16.2683ZM9.40742 16.2683C9.40742 16.4561 9.57406 16.6098 9.77776 16.6098C9.98147 16.6098 10.1481 16.4561 10.1481 16.2683V11.4879C10.1481 11.3001 9.98146 11.1464 9.77776 11.1464C9.57405 11.1464 9.40742 11.3001 9.40742 11.4879V16.2683ZM13.4815 5.34155C13.4815 5.15374 13.3149 5.00012 13.1112 5.00012L10.8888 5C10.6851 5 10.5185 5.15363 10.5185 5.34143V6.02429H13.4816L13.4815 5.34155Z" fill="#222222"/>
+                            </svg>
+                        </a>
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <div class="cart-btm">
+
+                    <div class="cart-subtotal">
+                        <p>{{ 'cart.general.subtotal' | t }}</p>
+                        <p>{{ cart.total_price | money }}</p>
+                        {% if cart.total_discounts > 0 %}
+                        <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="cart-btns">
+                        <input type="submit" class="button" name="update" value="{{ 'cart.general.update' | t }}">
+                        <input type="submit" class="button" name="checkout" value="{{ 'cart.general.checkout' | t }}">
+                    </div>
+                </div>
+            </form>
+        {% else %}
+        <h1>{{ 'cart.general.title' | t }}</h1>
+
+        {% comment %}
+        Cart empty state
+        {% endcomment %}
+        <div class="cart-empty">
+            <p>{{ 'cart.general.empty' | t }}</p>
+            <a href="collections/all">{{ 'cart.general.continue_browsing_html' | t }}</a>
+        </div>
+
+        {% endif %}
+    </div>
+</section>

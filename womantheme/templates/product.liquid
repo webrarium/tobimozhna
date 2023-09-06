@@ -1,0 +1,107 @@
+<section class="product-open">
+    <link href="//sachinchoolur.github.io/lightslider/dist/css/lightslider.css" rel="stylesheet">
+
+    <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js"></script>
+
+
+    {% render 'ajaxify-cart' %}
+
+
+    <div class="container">
+    {% render 'breadcrumbs' %}
+
+        <div class="product-wrp">
+            <div class="product-gallery">
+                <ul id="lightSlider">
+                    {% for image in product.images %}
+
+                    <li data-thumb="{{ image | image_url: width: 200 }}">
+                        {{ image | image_url: width: 650 | image_tag }}
+                    </li>
+                    
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div class="product-info">
+                <h1 class="product-title">{{ product.title}}</h1>
+                <div class="product-price">{{ product.price | money }}</div>
+                <div class="product-desc">{{ product.description }}</div>
+                {% form 'product', product %}
+
+                {% if product.variants.size > 1 %}
+                    {% for option in product.options %}
+                        <span style="text-transform:uppercase;font-weight:500">{{option}}</span>
+                    {% endfor %}
+                    <select name="id">
+                    {% for variant in product.variants %}
+                        <option value="{{ variant.id }}"
+                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                        >
+                        {{ variant.title }}
+
+                        </option>
+                    {% endfor %}
+                    </select>
+                    {% else %}
+                    <input type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
+                {% endif %}
+
+                <div class="quantity-wrp">
+                    <label for="q">Кількість</label>
+                    <div class="quantity">
+                        <div onclick="down()" >-</div>
+                        <input id="q"type="number" name="quantity" min="1" value="1">
+                        <div onclick="up()" >+</div>
+                    </div>
+                </div>
+
+
+                <a href="/pages/choose-a-size" class="size-help">{{'product.general.help_size' | t }}</a>
+
+
+                <div class="buttons-wrp">
+                    <button type="submit" class="button">{{'product.general.add_to_cart' | t }}</button>
+                    <button type="button"  class="button" onclick="document.querySelector('[data-testid]').click();">{{'product.general.one_click' | t }}</button>
+                    <div style="display:none;">
+                        {{ form | payment_button }}
+                    </div>
+                </div>
+                {% endform %}
+
+                {% assign tags = product.tags %}
+                {% if tags[0] == 'Набір'%}
+                {%else%}
+                <div class="related-set-wrp">
+                    {% assign rel_set = product.metafields.custom.set.value | default: collections['sets'].products[0] %}
+                    {{rel_set.featured_image | image_url : width:126 | image_tag }}
+                    <div class="related-set-inf">
+                        <h2>{{ 'product.general.related_set' | t }}</h2>
+                        <h3>{{rel_set.title}}</h3>
+                        <a href="{{rel_set.url | within: collections.all }}" class="button">{{ 'product.general.link_btn' | t }}</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+    $('#lightSlider').lightSlider({
+        gallery: true,
+        galleryMargin: 0,
+        item: 1,
+        loop:true,
+        slideMargin: 0,
+        thumbItem: 4
+    });
+    </script>
+
+
+</section>
+{% section 'product-recommendations' %}

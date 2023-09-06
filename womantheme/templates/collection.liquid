@@ -1,0 +1,19 @@
+<section class="collection-products-section">
+    <div class="container">
+    {% render 'breadcrumbs' %}
+        <h1> {{collection.title}}</h1>
+
+        <div class="collection-products-wrp">
+            {% for product in collection.products %}
+                <div class="product-card">
+                 <a href="{{ product.url | within: collection }}">
+                    {{product.featured_image | image_url: width: 400 | image_tag}}
+                    <h2>{{ product.title }}</h2>
+                    <div class="product-card-price">{{ product.price | money }}</div>
+                 </a>
+                    
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

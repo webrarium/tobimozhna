@@ -1,0 +1,41 @@
+function up (i)  {
+    if (i) {
+        let quantity = document.querySelector(`#q${i}`);
+        quantity.value = parseInt(quantity.value) + 1
+    }
+    else {
+        let quantity = document.querySelector("#q");
+        quantity.value = parseInt(quantity.value) + 1
+    }
+    
+}
+function down (i)  {
+    if (i) {
+        let quantity = document.querySelector(`#q${i}`);
+        if (quantity.value > 1){
+            quantity.value = parseInt(quantity.value) - 1}}
+    else {
+        let quantity = document.querySelector("#q");
+        if (quantity.value > 1){
+            quantity.value = parseInt(quantity.value) - 1}
+        }
+}
+
+let li = document.querySelectorAll('.nav-links-list > li');
+li.forEach(el => 
+el.onmouseover = function(){
+    el.classList.add("open");
+})
+li.forEach(el => 
+el.onmouseout = function(){
+    el.classList.remove("open");
+})
+
+let brg = document.querySelector('#brg');
+let nav = document.querySelector('header nav');
+    brg.onclick = function(){
+        nav.classList.toggle('open');
+
+        brg.classList.toggle('open');
+    }
+

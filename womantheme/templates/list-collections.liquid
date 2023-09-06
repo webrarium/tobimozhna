@@ -1,0 +1,21 @@
+<section class="collections-section">
+    <div class="container">
+    <h1>{{ 'general.pages.collections' | t }}</h1>
+        <div class="collections">
+            {% assign sorted_collections = collections | sort: 'title' %}
+            {% for collection in sorted_collections %}
+                {% assign col_img = collection.image | default: collection.products.first.featured_image %}
+                <div class="collection-card">
+                    <a href="{{ collection.url }}">
+                        {{col_img | image_url: width: 400 | image_tag}}
+                        <h2>{{collection.title}}</h2>
+
+                    </a>
+                    
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>

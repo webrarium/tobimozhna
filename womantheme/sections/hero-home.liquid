@@ -1,0 +1,25 @@
+<section class="hero-section" style="background-image: url({{section.settings.image-bg | image_url: width: 2161}})">
+    <div class="container">
+            {{ section.settings.heading }}
+    </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Home hero",
+    "settings": [
+
+        {
+            "type": "richtext",
+            "id": "heading",
+            "label": "Heading"
+        },
+                {
+            "type": "image_picker",
+            "id": "image-bg",
+            "label": "Image background"
+        }
+    ]
+  }
+{% endschema %}

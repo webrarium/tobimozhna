@@ -1,0 +1,41 @@
+<section class="fp-product-section {% if section.settings.reverse %} reverse {% endif %}">
+    <div class="fp-product-wrp">
+        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | default: section.settings.product.title }}" class="fp-product-img">
+        <div class="fp-product-inf-wrp">
+            <h2>
+                {{ section.settings.product.title }}
+            </h2>
+                {{ section.settings.description }}
+            <a href="{{ section.settings.product.url | within: collections.all }}" class="button">{{'home.general.detail_btn' | t }}</a>
+        </div>
+    </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Featured product 3",
+    "settings": [
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+        },
+        {
+            "type": "checkbox",
+            "id": "reverse",
+            "label": "Reverse section"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Text"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        }
+    ]
+  }
+{% endschema %}

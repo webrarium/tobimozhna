@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="{{'favicon.ico' | asset_img_url}}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    
+    <title>{{ page_title }} | tobi mozhna</title>
+
+     {% include 'social-meta-tags' %}
+{{ content_for_header }}
+{{ 'reset-styles.css' | asset_url | stylesheet_tag }}
+{{ 'style.css' | asset_url | stylesheet_tag }}
+
+</head>
+<body>
+{% render 'header' %}
+
+{{ content_for_layout }}
+
+{% render 'footer' %}
+
+{{ 'scripts.js' | asset_url | script_tag }}
+</body>
+</html>
